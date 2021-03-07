@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Create note</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container mt-3">
+    <ion-item>
+      <ion-label position="floating" color="medium">
+        <span> title</span>
+      </ion-label>
+      <ion-input [(ngModel)]="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" color="medium">
+        <span> location</span>
+      </ion-label>
+      <ion-input [(ngModel)]="location"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" color="medium">
+      </ion-label>
+      <ion-label position="floating" color="medium">details</ion-label>
+      <ion-textarea [(ngModel)]="detail" row="6">
+      </ion-textarea>
+    </ion-item>
+
+
+    <div class="row">
+      <div class="mt-3 mb-3">
+        <ion-button expand="block" color="secondary" (click)="savenote()">บันทึก</ion-button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</ion-content>
