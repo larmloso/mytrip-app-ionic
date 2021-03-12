@@ -43,8 +43,19 @@ export class SearchPage implements OnInit {
     },
   ]
 
+  public header :any = [
+    {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer GsMG1VojPWfo(AYtqXoXIMYnGfulHiJyVI8o5DL18SQhGmgt2q1dVSIvrL1(hGHLdKudzBGOhJNyONaclVozVTm=====2",
+      "Accept-Language": "TH"
+    }
+  ]
+
+  public url : string = 'https://tatapi.tourismthailand.org/tatapi/v5/';
+
   constructor(private activatedRoute: ActivatedRoute, public toastCtrl: ToastController, public router: Router, public navCtrl: NavController) {
     this.advice();
+    console.log(this.header);
 
   }
 
@@ -54,20 +65,9 @@ export class SearchPage implements OnInit {
 
   async sendtoRead(event: number) {
 
-    const headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer GsMG1VojPWfo(AYtqXoXIMYnGfulHiJyVI8o5DL18SQhGmgt2q1dVSIvrL1(hGHLdKudzBGOhJNyONaclVozVTm=====2",
-      "Accept-Language": "TH"
-    };
-
-    await axios.get(`https://tatapi.tourismthailand.org/tatapi/v5/attraction/${event}`, { headers: headers })
+    await axios.get(`${this.url}attraction/${event}`, { headers: this.header[0] })
       .then(response => {
-
         this.router.navigate(['read', JSON.stringify(response.data['result'])]);
-
-        // let dataObj = response.data;
-        // this.checkloding = false;
-        // console.log("send to read", dataObj);
       })
       .catch((error) => {
         this.openTost();
@@ -92,14 +92,7 @@ export class SearchPage implements OnInit {
 
   async tatSearch() {
     this.checkloding = true;
-
-    const headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer GsMG1VojPWfo(AYtqXoXIMYnGfulHiJyVI8o5DL18SQhGmgt2q1dVSIvrL1(hGHLdKudzBGOhJNyONaclVozVTm=====2",
-      "Accept-Language": "TH"
-    };
-
-    await axios.get(`https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=${this.keyword}`, { headers: headers })
+    await axios.get(`${this.url}places/search?keyword=${this.keyword}`, { headers: this.header[0] })
       .then(response => {
         let dataObj = response.data;
         this.checkloding = false;
@@ -127,17 +120,8 @@ async advice() {
 
   let adviceList = ["เยาวราช", "หาด", "เชียงใหม่", "พัทยา", "วัด"];
   let advice = this.random_item(adviceList);
-  console.log()
 
-
-
-  const headers = {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer GsMG1VojPWfo(AYtqXoXIMYnGfulHiJyVI8o5DL18SQhGmgt2q1dVSIvrL1(hGHLdKudzBGOhJNyONaclVozVTm=====2",
-    "Accept-Language": "TH"
-  };
-
-  await axios.get(`https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=${advice}`, { headers: headers })
+  await axios.get(`${this.url}places/search?keyword=${advice}`, { headers: this.header[0] })
     .then(response => {
       let dataObj = response.data;
       this.checkloding = false;

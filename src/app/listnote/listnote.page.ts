@@ -15,6 +15,8 @@ export class ListnotePage implements OnInit {
   public listnote: string;
   public tmpobj: any;
 
+  public bythumbnail: any;
+
   constructor(private activatedRoute: ActivatedRoute, public router: Router, public navCtrl: NavController,
     public userService: UserService, private alertCtrl: AlertController
     ) {
@@ -24,7 +26,7 @@ export class ListnotePage implements OnInit {
   ngOnInit() {
 
     this.userService.readData().subscribe(data => {
-      this.tmpobj = data.map(e => {
+      this.bythumbnail = data.map(e => {
         return {
           id: e.payload.doc.id,
           title: e.payload.doc.data()['title'.toString()],
@@ -33,7 +35,13 @@ export class ListnotePage implements OnInit {
           date: this.dateTime(e.payload.doc.data()['date'.toString()]),
         }
       });
-      console.log(this.tmpobj);
+
+      this.bythumbnail.sort(function (b, a) {
+        var x = a.date.toLowerCase();
+        var y = b.date.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      this.tmpobj = this.bythumbnail;
     })
   }
 
