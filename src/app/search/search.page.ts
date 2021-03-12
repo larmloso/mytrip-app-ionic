@@ -16,6 +16,7 @@ export class SearchPage implements OnInit {
 
   public search: string;
   public tmpObj: any;
+  public adviceObj: any;
 
 
   public keyword: any;
@@ -42,7 +43,10 @@ export class SearchPage implements OnInit {
     },
   ]
 
-  constructor(private activatedRoute: ActivatedRoute, public toastCtrl: ToastController, public router: Router, public navCtrl: NavController) { }
+  constructor(private activatedRoute: ActivatedRoute, public toastCtrl: ToastController, public router: Router, public navCtrl: NavController) {
+    this.advice();
+
+  }
 
   ngOnInit() {
     this.search = this.activatedRoute.snapshot.paramMap.get('id');
@@ -108,25 +112,51 @@ export class SearchPage implements OnInit {
         });
         this.tmpObj = bythumbnail;
 
-
-        // dataObj['result'].forEach(e => {
-        //   if (e.thumbnail_url != '') {
-        //     newDateObject.push(e);
-        //   }
-        // });
-        // this.tmpObj = newDateObject;
-
-        //console.log(dataObj['result'])
       })
       .catch((error) => {
         console.log('error ' + error);
         this.checkloding = false;
       });
-
-
-    // const data = axios.get('')
-    // console.log(this.keyword);
-    // console.log("Search")
   }
+
+  random_item(items: any) {
+    return items[Math.floor(Math.random() * items.length)];
+  }
+
+async advice() {
+
+  let adviceList = ["เยาวราช", "หาด", "เชียงใหม่", "พัทยา", "วัด"];
+  let advice = this.random_item(adviceList);
+  console.log()
+
+
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer GsMG1VojPWfo(AYtqXoXIMYnGfulHiJyVI8o5DL18SQhGmgt2q1dVSIvrL1(hGHLdKudzBGOhJNyONaclVozVTm=====2",
+    "Accept-Language": "TH"
+  };
+
+  await axios.get(`https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=${advice}`, { headers: headers })
+    .then(response => {
+      let dataObj = response.data;
+      this.checkloding = false;
+      let adviceObject = [];
+
+      var bythumbnail = dataObj['result'];
+      bythumbnail.forEach(e => {
+        if(e.thumbnail_url != ""){
+          adviceObject.push(e);
+        }
+      });
+      this.adviceObj = adviceObject;
+
+    })
+    .catch((error) => {
+      console.log('error ' + error);
+      this.checkloding = false;
+    });
+
+}
 
 }

@@ -26,6 +26,14 @@ const routes: Routes = [
   {
     path: 'listnote/:id',
     loadChildren: () => import('./listnote/listnote.module').then( m => m.ListnotePageModule)
+  },
+  {
+    path: 'readnote/:dataObj',
+    loadChildren: () => import('./readnote/readnote.module').then( m => m.ReadnotePageModule)
+  },
+  {
+    path: 'editpage/:dataObj',
+    loadChildren: () => import('./editpage/editpage.module').then( m => m.EditpagePageModule)
   }
 ];
 

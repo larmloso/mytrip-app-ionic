@@ -28,6 +28,7 @@
       </div>
     </div>
 
+
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -47,29 +48,30 @@
       </ion-row>
     </ion-grid>
 
+    &nbsp;&nbsp;&nbsp; <b>แนะนำ</b>
+    <ion-slides pager="true">
+      <ion-slide *ngFor="let item of adviceObj" (click)="sendtoRead(item.place_id)">
+        <ion-card>
+          <img src="{{item.thumbnail_url}}" alt="" srcset="">
+          <ion-card-header>
+            <ion-card-subtitle></ion-card-subtitle>
+            <ion-card-title>{{item.place_name}}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
     <ion-card *ngFor="let item of tmpObj" (click)="sendtoRead(item.place_id)">
-      <ion-item>
-        <ion-icon color="secondary" name="pin" slot="start"></ion-icon>
-        <ion-label>{{item.location.province}}, {{item.location.district}} </ion-label>
-        <ion-button fill="outline" slot="end">View</ion-button>
-      </ion-item>
+      <img src="{{item.thumbnail_url}}" alt="" srcset="">
+      <ion-card-header>
+        <ion-card-subtitle>{{item.location.province}}, {{item.location.district}}</ion-card-subtitle>
+        <ion-card-title>{{item.place_name}}</ion-card-title>
+      </ion-card-header>
 
-      <ion-card-content>
-
-          <ion-label class="mb-2"><h2 class="mb-3"> {{item.place_name}}</h2></ion-label>
-
-          <ion-chip color="tertiary">
-            <ion-icon name="golf-outline"></ion-icon>
-            <ion-label>{{item.category_description}}</ion-label>
-          </ion-chip>
-
-      </ion-card-content>
-      <img *ngIf="item.thumbnail_url != ''" src="{{item.thumbnail_url}}" />
-      <!-- <img *ngIf="item.thumbnail_url == ''" src="{{item.thumbnail_url}}" /> -->
+      <!-- <ion-card-content>
+        {{item.category_description}}
+      </ion-card-content> -->
     </ion-card>
-
-
-
 
 
 
